@@ -10,6 +10,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import java.util.ArrayList;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(SpringExtension.class)
@@ -52,9 +54,28 @@ public class UsuarioControllerTest {
 
         assertEquals(200, response.getStatusCodeValue());
         assertNotNull(response.getBody());
-        assertEquals("Juan Pérez ACTUALIZADO", response.getBody().getNombre());
+        assertEquals("Juan Pérez Actualizado", response.getBody().getNombre());
         assertEquals("juan.perez.actualizado@example.com", response.getBody().getEmail());
         assertEquals("newpassword123", response.getBody().getPassword());
     }
 
+    @Test
+    void testObtenerUsuarios() {
+        Usuario usuario1 = new Usuario();
+        usuario1.setId(2L);
+        usuario1.setNombre("Juan Pérez Actualizado");
+        usuario1.setEmail("juan.perez.actualizado@example.com");
+        usuario1.setPassword("newpassword123");
+
+        ArrayList<Usuario> resultado = usuarioController.obtenerUsuarios();
+
+        assertAll(
+                () -> assertNotNull(resultado),
+                () -> assertEquals(19, resultado.size()),
+                () -> assertEquals(usuario1.getId(), resultado.get(0).getId()),
+                () -> assertEquals(usuario1.getNombre(), resultado.get(0).getNombre()),
+                () -> assertEquals(usuario1.getEmail(), resultado.get(0).getEmail()),
+                () -> assertEquals(usuario1.getPassword(), resultado.get(0).getPassword())
+        );
+    }
 }
