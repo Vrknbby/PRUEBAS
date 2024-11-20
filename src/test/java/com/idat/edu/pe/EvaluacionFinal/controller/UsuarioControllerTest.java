@@ -30,20 +30,20 @@ class UsuarioControllerTest {
     @BeforeEach
     void setUp() {
         usuario = new Usuario();
-        usuario.setId(1L);
+        usuario.setId(4L);
         usuario.setNombre("Cristian Medina");
         usuario.setEmail("mak_21_05@hotmail.com");
         usuario.setPassword("123456");
         usuario.setFechaNacimiento(LocalDate.parse("2000-08-22"));
         usuario.setFondos(new BigDecimal("740.00"));
-        usuario.setRoles(new ArrayList<>());
+
     }
 
     @Test
     void obtenerUsuarioPorId() {
+
         Optional<Usuario> usuarioEncontrado = usuarioController.obtenerUsuarioPorId(usuario.getId());
 
-        // Comparar el usuario encontrado con el usuario creado
         assertEquals(usuario.getId(), usuarioEncontrado.get().getId());
         assertEquals(usuario.getNombre(), usuarioEncontrado.get().getNombre());
         assertEquals(usuario.getEmail(), usuarioEncontrado.get().getEmail());

@@ -138,4 +138,17 @@ public class Usuario {
 
     public Usuario() {
     }
+
+    @Override
+    public String toString() {
+        return "Usuario{" +
+                "id=" + id +
+                ", nombre='" + nombre + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", fechaNacimiento=" + fechaNacimiento +
+                ", fondos=" + fondos +
+                '}';
+    }
+
 }
