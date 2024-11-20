@@ -3,7 +3,7 @@ Hola soy goku, necesito que hagas push al main o veggeta morira
 sigue estos simples pasos 
 
 --Ubicate en la rama principal con: 
-  git checout main 
+  git checkout main 
 
 --Luego haz un merge de tu rama a la rama principal 
   git merge (nombre de tu rama)
