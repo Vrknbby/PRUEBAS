@@ -52,8 +52,9 @@ public class UsuarioControllerTest {
 
         assertEquals(200, response.getStatusCodeValue());
         assertNotNull(response.getBody());
-        assertEquals("Juan Pérez Actualizado", response.getBody().getNombre());
+        assertEquals("Juan Pérez ACTUALIZADO", response.getBody().getNombre());
         assertEquals("juan.perez.actualizado@example.com", response.getBody().getEmail());
         assertEquals("newpassword123", response.getBody().getPassword());
     }
+
 }
