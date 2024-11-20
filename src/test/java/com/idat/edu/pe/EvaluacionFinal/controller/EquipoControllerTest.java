@@ -47,8 +47,8 @@ public class EquipoControllerTest {
         equipo.setPresidente("Berta");
     }
 
-    @org.junit.jupiter.api.Test
-    void testEliminarUsuarioPorId() {
+    @Test
+    public void testEliminarUsuarioPorId() {
         equipoServicio.eliminarEquipo(equipo.getId());
         String respuesta = equipoController.eliminarEquipoPorId(equipo.getId());
         assertEquals("El usuario se elimino correctamente", respuesta);
