@@ -30,12 +30,10 @@ class UsuarioControllerTest {
     @BeforeEach
     void setUp() {
         usuario = new Usuario();
-        usuario.setId(4L);
-        usuario.setNombre("Cristian Medina");
-        usuario.setEmail("mak_21_05@hotmail.com");
-        usuario.setPassword("123456");
-        usuario.setFechaNacimiento(LocalDate.parse("2000-08-22"));
-        usuario.setFondos(new BigDecimal("740.00"));
+        usuario.setId(2L);
+        usuario.setNombre("Juan Pérez");
+        usuario.setEmail("juan.perez@example.com");
+        usuario.setPassword("password123");
 
     }
 
