@@ -10,7 +10,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -29,10 +32,13 @@ public class UsuarioControllerTest {
     @BeforeEach
     void setUp() {
         usuario = new Usuario();
-        usuario.setId(1L);
-        usuario.setNombre("Juan Pérez");
-        usuario.setEmail("juan.perez@example.com");
-        usuario.setPassword("password123");
+        usuario.setId(4L);
+        usuario.setNombre("Cristian Medina");
+        usuario.setEmail("mak_21_05@hotmail.com");
+        usuario.setPassword("123456");
+        usuario.setFechaNacimiento(LocalDate.parse("2000-08-22"));
+        usuario.setFondos(new BigDecimal("740.00"));
+
     }
 
     @Test
@@ -61,21 +67,20 @@ public class UsuarioControllerTest {
 
     @Test
     void testObtenerUsuarios() {
-        Usuario usuario1 = new Usuario();
-        usuario1.setId(2L);
-        usuario1.setNombre("Juan Pérez Actualizado");
-        usuario1.setEmail("juan.perez.actualizado@example.com");
-        usuario1.setPassword("newpassword123");
-
         ArrayList<Usuario> resultado = usuarioController.obtenerUsuarios();
-
         assertAll(
                 () -> assertNotNull(resultado),
-                () -> assertEquals(19, resultado.size()),
-                () -> assertEquals(usuario1.getId(), resultado.get(0).getId()),
-                () -> assertEquals(usuario1.getNombre(), resultado.get(0).getNombre()),
-                () -> assertEquals(usuario1.getEmail(), resultado.get(0).getEmail()),
-                () -> assertEquals(usuario1.getPassword(), resultado.get(0).getPassword())
+                () -> assertEquals(18, resultado.size())
         );
+    }
+
+    @Test
+    void obtenerUsuarioPorId() {
+
+        Optional<Usuario> usuarioEncontrado = usuarioController.obtenerUsuarioPorId(2L);
+
+        assertEquals(2L, usuarioEncontrado.get().getId());
+        assertEquals("Juan Pérez Actualizado", usuarioEncontrado.get().getNombre());
+        assertEquals("juan.perez.actualizado@example.com", usuarioEncontrado.get().getEmail());
     }
 }
