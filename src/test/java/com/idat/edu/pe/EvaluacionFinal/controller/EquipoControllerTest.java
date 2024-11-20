@@ -13,6 +13,7 @@ import org.mockito.junit.MockitoJUnitRunner;
 import java.util.Optional;
 
 import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -58,18 +59,22 @@ public class EquipoControllerTest {
         Optional<Equipo> respuesta2 = equipoController.obtenerEquipoPorId(equipoId2);
 
         // Verificaciones
-        assertTrue(respuesta1.isPresent());
-        assertEquals(equipoId1, respuesta1.get().getId());
-        assertEquals("Equipo A", respuesta1.get().getNombre());
-        assertEquals("España", respuesta1.get().getPais());
-        assertEquals("1900-01-01", respuesta1.get().getFechaFundacion());
-        assertEquals("Juan Pérez", respuesta1.get().getPresidente());
+        assertAll(
+                () -> assertEquals(equipoId1, respuesta1.get().getId()),
+                () -> assertEquals("Equipo A", respuesta1.get().getNombre()),
+                () -> assertEquals("España", respuesta1.get().getPais()),
+                () -> assertEquals("1900-01-01", respuesta1.get().getFechaFundacion()),
+                () -> assertEquals("Juan Pérez", respuesta1.get().getPresidente())
+        );
 
-        assertTrue(respuesta2.isPresent());
-        assertEquals(equipoId2, respuesta2.get().getId());
-        assertEquals("Equipo B", respuesta2.get().getNombre());
-        assertEquals("Argentina", respuesta2.get().getPais());
-        assertEquals("1920-05-15", respuesta2.get().getFechaFundacion());
-        assertEquals("Carlos Gómez", respuesta2.get().getPresidente());
+
+        assertAll(
+                () -> assertEquals(equipoId2, respuesta2.get().getId()),
+                () -> assertEquals("Equipo B", respuesta2.get().getNombre()),
+                () -> assertEquals("Argentina", respuesta2.get().getPais()),
+                () -> assertEquals("1920-05-15", respuesta2.get().getFechaFundacion()),
+                () -> assertEquals("Carlos Gómez", respuesta2.get().getPresidente())
+        );
+
     }
 }
