@@ -1,80 +1,79 @@
 package com.idat.edu.pe.EvaluacionFinal.controller;
 
 import com.idat.edu.pe.EvaluacionFinal.model.Equipo;
+import com.idat.edu.pe.EvaluacionFinal.model.Usuario;
 import com.idat.edu.pe.EvaluacionFinal.service.EquipoServicio;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.MockitoJUnitRunner;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.ResponseEntity;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import java.util.ArrayList;
 import java.util.Optional;
 
 import static org.junit.Assert.*;
 import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.when;
 
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(SpringExtension.class)
+@SpringBootTest
 public class EquipoControllerTest {
 
-    @InjectMocks
+    @Autowired
     private EquipoController equipoController;
 
-    @Mock
+    @Autowired
     private EquipoServicio equipoServicio;
 
-    @Before
-    public void setup() {
-        MockitoAnnotations.initMocks(this); // Inicializa los mocks
+    private Equipo equipo;
+    @BeforeEach
+    void setUp() {
+        equipo = new Equipo();
+        equipo.setId(1L);
+        equipo.setNombre("Barcelona FC");
+        equipo.setPais("España");
+        equipo.setFechaFundacion("02-02-1899");
+        equipo.setPresidente("Berta");
+    }
+
+    @org.junit.jupiter.api.Test
+    void testEliminarUsuarioPorId() {
+        equipoServicio.eliminarEquipo(equipo.getId());
+        String respuesta = equipoController.eliminarEquipoPorId(equipo.getId());
+        assertEquals("El usuario se elimino correctamente", respuesta);
     }
 
     @Test
-    public void testObtenerEquipoPorId() {
-        // Datos de prueba
-        Long equipoId1 = 1L;
-        Long equipoId2 = 2L;
+    public void testObtenerEquipo() {
 
-        Equipo equipoMock1 = new Equipo();
-        equipoMock1.setId(equipoId1);
-        equipoMock1.setNombre("Equipo A");
-        equipoMock1.setPais("España");
-        equipoMock1.setFechaFundacion("1900-01-01");
-        equipoMock1.setPresidente("Juan Pérez");
+        Equipo equipo1 = new Equipo();
+        equipo1.setId(2L);
+        equipo1.setNombre("Atletico de Madrid");
+        equipo1.setPais("España");
+        equipo1.setFechaFundacion("26-04-1903");
+        equipo1.setPresidente("Miguel Angel Gil Marin");
 
-        Equipo equipoMock2 = new Equipo();
-        equipoMock2.setId(equipoId2);
-        equipoMock2.setNombre("Equipo B");
-        equipoMock2.setPais("Argentina");
-        equipoMock2.setFechaFundacion("1920-05-15");
-        equipoMock2.setPresidente("Carlos Gómez");
-
-        // Comportamiento simulado de los servicios
-        when(equipoServicio.obtenerEquipoPorId(equipoId1)).thenReturn(Optional.of(equipoMock1));
-        when(equipoServicio.obtenerEquipoPorId(equipoId2)).thenReturn(Optional.of(equipoMock2));
-
-        // Llamada al controlador
-        Optional<Equipo> respuesta1 = equipoController.obtenerEquipoPorId(equipoId1);
-        Optional<Equipo> respuesta2 = equipoController.obtenerEquipoPorId(equipoId2);
-
-        // Verificaciones
-        assertAll(
-                () -> assertEquals(equipoId1, respuesta1.get().getId()),
-                () -> assertEquals("Equipo A", respuesta1.get().getNombre()),
-                () -> assertEquals("España", respuesta1.get().getPais()),
-                () -> assertEquals("1900-01-01", respuesta1.get().getFechaFundacion()),
-                () -> assertEquals("Juan Pérez", respuesta1.get().getPresidente())
-        );
-
+        ArrayList<Equipo> response = equipoController.obtenerEquipo();
 
         assertAll(
-                () -> assertEquals(equipoId2, respuesta2.get().getId()),
-                () -> assertEquals("Equipo B", respuesta2.get().getNombre()),
-                () -> assertEquals("Argentina", respuesta2.get().getPais()),
-                () -> assertEquals("1920-05-15", respuesta2.get().getFechaFundacion()),
-                () -> assertEquals("Carlos Gómez", respuesta2.get().getPresidente())
+                () -> assertNotNull(response),
+                () -> assertEquals(19, response.size()),
+                () -> assertEquals(equipo1.getId(), response.get(0).getId()),
+                () -> assertEquals(equipo1.getNombre(), response.get(0).getNombre()),
+                () -> assertEquals(equipo1.getPais(), response.get(0).getPais()),
+                () -> assertEquals(equipo1.getFechaFundacion(), response.get(0).getFechaFundacion()),
+                () -> assertEquals(equipo1.getPresidente(), response.get(0).getPresidente())
         );
-
     }
 }
