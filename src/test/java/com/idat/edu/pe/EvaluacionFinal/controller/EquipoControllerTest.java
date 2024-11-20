@@ -51,7 +51,7 @@ public class EquipoControllerTest {
     public void testEliminarUsuarioPorId() {
         equipoServicio.eliminarEquipo(equipo.getId());
         String respuesta = equipoController.eliminarEquipoPorId(equipo.getId());
-        assertEquals("El usuario se elimino correctamente", respuesta);
+        assertEquals("El Equipo se ha elimino correctamente", respuesta);
     }
 
     @Test
